@@ -4,9 +4,13 @@ version = "0.1.0"
 description = ""
 authors = ["Johan Vergeer <johanvergeer@gmail.com>"]
 license = "MIT"
+packages = [
+    { include = "app", from = "src" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+fastapi = { version = "^0.74.1", extras = ["all"] }
 
 [tool.poetry.dev-dependencies]
 
