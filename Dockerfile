@@ -13,5 +13,3 @@ COPY ["/src/", "./src/"]
 COPY ["./tests/", "./tests/"]
 
 RUN poetry install --no-interaction --remove-untracked
-
-ENTRYPOINT ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--reload"]

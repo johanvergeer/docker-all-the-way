@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   app:
-    image: docker-all-the-way/app:latest
+    image: docker-all-the-way/app-run-local:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,6 +10,7 @@ services:
       - "8000:8000"
     volumes:
       - "./src/:/opt/src/"
+      - "./tests/:/opt/tests/"
   nginx:
     image: nginx:1.21-alpine
     ports:
