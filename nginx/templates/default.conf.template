@@ -6,8 +6,8 @@ server {
 
     server_name  localhost;
 
-    ssl_certificate /etc/nginx/certs/localhost+2.pem;
-    ssl_certificate_key /etc/nginx/certs/localhost+2-key.pem;
+    ssl_certificate /etc/nginx/certs/${NGINX_SSL_CERTIFICATE};
+    ssl_certificate_key /etc/nginx/certs/${NGINX_SSL_CERTIFICATE_KEY};
 
     location / {
         proxy_pass http://app:8000;

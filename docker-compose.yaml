@@ -16,5 +16,8 @@ services:
       - "8080:80"
       - "4433:443"
     volumes:
-      - "./nginx/conf.d/:/etc/nginx/conf.d/"
+      - "./nginx/templates/:/etc/nginx/templates/"
       - "./nginx/certs:/etc/nginx/certs/"
+    environment:
+      - NGINX_SSL_CERTIFICATE=localhost+2.pem
+      - NGINX_SSL_CERTIFICATE_KEY=localhost+2-key.pem
