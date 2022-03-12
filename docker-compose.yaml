@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  app:
+    image: docker-all-the-way/app:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - "./src/:/opt/src/"
