@@ -2,7 +2,7 @@ server {
     listen      443 ssl;
     listen [::]:443 ssl;
 
-    server_name  localhost;
+    server_name  ${NGINX_SERVER_NAME};
 
     ssl_certificate /etc/nginx/certs/${NGINX_SSL_CERTIFICATE};
     ssl_certificate_key /etc/nginx/certs/${NGINX_SSL_CERTIFICATE_KEY};

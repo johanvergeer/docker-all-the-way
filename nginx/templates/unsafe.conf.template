@@ -2,7 +2,7 @@ server {
     listen       80;
     listen  [::]:80;
 
-    server_name localhost;
+    server_name ${NGINX_SERVER_NAME};
 
-    return 301 https://localhost:4433$request_uri;
+    return 301 https://localhost:${NGINX_HTTPS_REDIRECT_PORT}$request_uri;
 }
