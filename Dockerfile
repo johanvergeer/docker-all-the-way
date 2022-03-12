@@ -1,14 +1,17 @@
 FROM python:3.10-buster
 
+RUN pip install poetry
+
+RUN python -m venv /venv
+ENV VIRTUAL_ENV=/venv
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
 WORKDIR /opt
 
-COPY src ./src
-COPY poetry.lock pyproject.toml ./
+COPY ["./poetry.lock", "./pyproject.toml", "./"]
+COPY ["/src/", "./src/"]
+COPY ["./tests/", "./tests/"]
 
-RUN pip install --upgrade --no-cache-dir pip && \
-    pip install --no-cache-dir poetry && \
-    poetry config virtualenvs.create false && \
-    poetry install -n && \
-    pip uninstall --yes poetry
+RUN poetry install --no-interaction --remove-untracked
 
 ENTRYPOINT ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--reload"]
