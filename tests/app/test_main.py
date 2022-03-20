@@ -1,11 +1,13 @@
-from app.main import app
+from tornado.testing import AsyncHTTPTestCase
 
-from fastapi.testclient import TestClient
-
-client = TestClient(app)
+from app.main import make_app
 
 
-def test_read_main():
-    response = client.get("/")
-    assert response.status_code == 200
-    assert response.json() == {"message": "Hello World"}
+class TestMain(AsyncHTTPTestCase):
+    def get_app(self):
+        return make_app()
+
+    def test_read_main(self):
+        response = self.fetch("/")
+        self.assertEqual(response.code, 200)
+        self.assertEqual(response.body, b"Hello, World")

@@ -1,15 +1,11 @@
 FROM python:3.10-buster
 
-RUN pip install poetry
-
-RUN python -m venv /venv
-ENV VIRTUAL_ENV=/venv
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
 WORKDIR /opt
 
-COPY ["./poetry.lock", "./pyproject.toml", "./"]
+COPY ["./setup.py", "./"]
 COPY ["/src/", "./src/"]
 COPY ["./tests/", "./tests/"]
 
-RUN poetry install --no-interaction --remove-untracked
+RUN python -m pip install --upgrade pip \
+    && python setup.py install \
+    && pip install -e .
