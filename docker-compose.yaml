@@ -6,13 +6,16 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
     volumes:
       - "./src/:/opt/src/"
       - "./tests/:/opt/tests/"
     environment:
       DEBUG: 0
+    secrets:
+      - postgres_password
+      - postgres_user
+    depends_on:
+      - db
   nginx:
     image: nginx:1.21-alpine
     ports:
@@ -26,3 +29,18 @@ services:
       - NGINX_HTTPS_REDIRECT_PORT=4433
       - NGINX_SSL_CERTIFICATE=localhost+2.pem
       - NGINX_SSL_CERTIFICATE_KEY=localhost+2-key.pem
+    depends_on:
+      - app
+  db:
+    image: postgres:14.2
+    environment:
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+      - POSTGRES_USER_FILE=/run/secrets/postgres_user
+    secrets:
+      - postgres_password
+      - postgres_user
+secrets:
+  postgres_password:
+    file: ./secrets/postgres_password.txt
+  postgres_user:
+    file: ./secrets/postgres_user.txt

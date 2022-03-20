@@ -2,6 +2,16 @@ version: "3.8"
 
 services:
   app:
+    ports:
+      - "8000:8000"
     environment:
       DEBUG: "True"
     entrypoint: ["serve_app"]
+  db:
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+volumes:
+  postgres_db:
+    name: postgres-db-data
