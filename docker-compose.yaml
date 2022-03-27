@@ -9,6 +9,8 @@ services:
     volumes:
       - "./src/:/opt/src/"
       - "./tests/:/opt/tests/"
+      - "./pyproject.toml:/opt/pyproject.toml"
+      - "./poetry.lock:/opt/poetry.lock"
     environment:
       DEBUG: 0
     secrets:
