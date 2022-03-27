@@ -10,35 +10,35 @@ Function Run-DockerCompose
     docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml $args
 }
 
-Set-Alias dcdev -Value Run-DockerCompose
+Set-Alias -Name dcdev -Value Run-DockerCompose
 
 Function Start-Compose
 {
     Run-DockerCompose up -d
 }
 
-Set-Alias dcup -Value Start-Compose
+Set-Alias -Name dcup -Value Start-Compose
 
 Function Stop-Compose
 {
     Run-DockerCompose down
 }
 
-Set-Alias dcdown -Value Stop-Compose
+Set-Alias -Name dcdown -Value Stop-Compose
 
 Function Start-DbContainerShell
 {
     docker exec -it $DB_CONTAINER bash
 }
 
-Set-Alias dbshell -Value Start-DbContainerShell
+Set-Alias -Name dbshell -Value Start-DbContainerShell
 
 Function Start-AppContainerShell
 {
     docker exec -it $APP_CONTAINER bash
 }
 
-Set-Alias appshell -Value Start-AppContainerShell
+Set-Alias -Name appshell -Value Start-AppContainerShell
 
 Function Run-Migrations
 {
@@ -46,21 +46,21 @@ Function Run-Migrations
     docker exec $DB_CONTAINER bash /etc/opt/db/run_migrations.sh;
 }
 
-Set-Alias runmigrations -Value Run-Migrations
+Set-Alias -Name runmigrations -Value Run-Migrations
 
 Function Run-Tests
 {
     docker exec $APP_CONTAINER coverage run -m unittest $args
 }
 
-Set-Alias test -Value Run-Tests
+Set-Alias -Name test -Value Run-Tests
 
 Function Get-CoverageReport
 {
     docker exec $APP_CONTAINER coverage report -m
 }
 
-Set-Alias coveragereport -Value Get-CoverageReportJson
+Set-Alias -Name coveragereport -Value Get-CoverageReportJson
 
 Function Get-CoverageReportJSON
 {
@@ -68,18 +68,18 @@ Function Get-CoverageReportJSON
     docker cp ${APP_CONTAINER}:/opt/coverage.json coverage.json;
 }
 
-Set-Alias coveragejson -Value Get-CoverageReportJSON
+Set-Alias -Name coveragejson -Value Get-CoverageReportJSON
 
 Function Run-Poetry
 {
     docker exec $APP_CONTAINER poetry $args
 }
 
-Set-Alias poetry -Value Run-Poetry
+Set-Alias -Name poetry -Value Run-Poetry
 
 Function Build-ProductionImage
 {
     docker build -t docker-all-the-way/app-run-production:1.0.0 --target production --progress plain --pull .
 }
 
-Set-Alias buildprod -Value Build-ProductionImage
+Set-Alias -Name buildprod -Value Build-ProductionImage
