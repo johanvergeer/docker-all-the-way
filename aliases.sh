@@ -20,3 +20,6 @@ alias coveragejson="docker exec $APP_CONTAINER coverage json && docker cp $APP_C
 
 # Run poetry commands in Docker container
 alias poetry="docker exec $APP_CONTAINER poetry"
+
+# Build production image
+alias buildprod="docker build -t docker-all-the-way/app-run-production:1.0.0 --target production --progress plain --pull ."
