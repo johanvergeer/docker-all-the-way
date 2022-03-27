@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "docker-all-the-way"
+version = "0.1.0"
+description = "Docker All The Way"
+authors = ["Johan Vergeer <johanvergeer@gmail.com>"]
+license = "MIT"
+packages = [
+    { include = "app", from = "src" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+tornado = "6.1"
+psycopg2-binary = "2.9.3"
+
+[tool.poetry.dev-dependencies]
+
+[tool.poetry.scripts]
+serve_app = "app.main:main"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
