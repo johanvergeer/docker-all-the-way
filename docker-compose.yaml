@@ -3,14 +3,6 @@ version: "3.8"
 services:
   app:
     image: docker-all-the-way/app-run-local:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - "./src/:/opt/src/"
-      - "./tests/:/opt/tests/"
-      - "./pyproject.toml:/opt/pyproject.toml"
-      - "./poetry.lock:/opt/poetry.lock"
     environment:
       DEBUG: 0
     secrets:

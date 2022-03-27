@@ -2,8 +2,17 @@ version: "3.8"
 
 services:
   app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: develop
     ports:
       - "8000:8000"
+    volumes:
+      - "./src/:/opt/src/"
+      - "./tests/:/opt/tests/"
+      - "./pyproject.toml:/opt/pyproject.toml"
+      - "./poetry.lock:/opt/poetry.lock"
     environment:
       DEBUG: "True"
     entrypoint: ["serve_app"]
