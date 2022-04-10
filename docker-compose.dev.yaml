@@ -23,4 +23,4 @@ services:
       - postgres_db:/var/lib/postgresql/data
 volumes:
   postgres_db:
-    name: postgres-db-data
+    name: docker-all-the-way_postgres-db-data

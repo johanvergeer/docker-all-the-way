@@ -6,8 +6,9 @@
     PS> . .\aliases.ps1
 #>
 
-Set-Variable -Name APP_CONTAINER -Value "docker-all-the-way-app"
-Set-Variable -Name DB_CONTAINER -Value "docker-all-the-way-db"
+Set-Variable -Name PROJECT_SLUG -Value "docker-all-the-way"
+Set-Variable -Name APP_CONTAINER -Value "${PROJECT_SLUG}-app"
+Set-Variable -Name DB_CONTAINER -Value "${PROJECT_SLUG}-db"
 Set-Variable -Name SSL_CERTIFICATE_DIRECTORY -Value "./nginx/certs/"
 Set-Variable -Name SSL_CERTIFICATE_PATH -Value "${SSL_CERTIFICATE_DIRECTORY}localhost+2.pem"
 Set-variable -Name POSTGRES_PASSWORD_PATH -Value "./secrets/postgres_password.txt"
@@ -37,6 +38,30 @@ Set-Alias -Name dcup -Value Start-ComposeStack
 
 Function Stop-ComposeStack { Invoke-DockerComposeForDevelopment down }
 Set-Alias -Name dcdown -Value Stop-ComposeStack
+
+Function Clear-DockerResources {
+    <#
+        .SYNOPSIS
+        Stop the compose stack and clear all Docker resources associated with this project
+     #>
+
+    if ($(Read-Host -Prompt "Are you sure you want to stop the Compose stack and remove all associated resources? (y/n)?") -eq "y")
+    {
+        Stop-ComposeStack
+
+        # Clear all images of which the repository name contains PROJECT_SLUG
+        docker image rm $(docker images --format "{{.Repository}}:{{.Tag}}" | grep ${PROJECT_SLUG})
+
+        # Clear all volumes of which the name contains PROJECT_SLUG
+        docker volume rm $(docker volume ls --format "{{.Name}}" | grep ${PROJECT_SLUG})
+
+        # Clear all networks of which the name contains PROJECT_SLUG
+        docker network rm $(docker network ls --format "{{.Name}}" | grep ${PROJECT_SLUG})
+    }
+    else {
+        Write-Output "Aborted"
+    }
+}
 
 Function Invoke-Poetry {
     <#
@@ -110,14 +135,14 @@ Function Invoke-Migrations {
     docker cp db_migrations/. ${DB_CONTAINER}:/etc/opt/db/;
     docker exec $DB_CONTAINER bash /etc/opt/db/run_migrations.sh;
 }
-Set-Alias -Name runmigrations -Value Run-Migrations
+Set-Alias -Name runmigrations -Value Invoke-Migrations
 
 Function Build-ProductionImage {
     <#
         .SYNOPSIS
         Builds the Docker image for production use
     #>
-    docker build -t docker-all-the-way/app-run-production:1.0.0 --target production --progress plain --pull .
+    docker build -t ${PROJECT_SLUG}/app-run-production:1.0.0 --target production --progress plain --pull .
 }
 Set-Alias -Name buildprod -Value Build-ProductionImage
 
