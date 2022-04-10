@@ -19,7 +19,7 @@ def make_app():
         [
             (r"/", MainHandler),
         ],
-        debug=bool(getenv_bool("DEBUG", default=False)),
+        debug=getenv_bool("DEBUG", default=False),
     )
 
 
