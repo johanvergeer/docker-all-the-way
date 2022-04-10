@@ -4,7 +4,7 @@ This is the demo code for my talk called "Docker All The Way".
 
 This project contains a PowerShell script with all the commands to run the app, run tests and perform other actions on the images and containers.
 
-This README contains doesn't contain very much information, which is by design. 
+This README contains doesn't contain very much information, which is by design.
 (README files aren't maintained very well since they don't break when something changes).
 Instead, `activate.ps1` should give a decent understanding of how to get the app up and running.
 
@@ -35,13 +35,13 @@ Instead, `activate.ps1` should give a decent understanding of how to get the app
     ```powershell
     PS> runmigrations
     ```
-   
+
 2. Run the tests
 
     ```powershell
     PS> test
     ```
-   
+
 ## Contribute
 
 Feel free to create an issue or pull request when you would like to contribute.

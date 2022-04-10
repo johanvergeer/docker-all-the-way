@@ -14,7 +14,7 @@ Set-Variable -Name SSL_CERTIFICATE_PATH -Value "${SSL_CERTIFICATE_DIRECTORY}loca
 Set-variable -Name POSTGRES_PASSWORD_PATH -Value "./secrets/postgres_password.txt"
 Set-variable -Name POSTGRES_USER_PATH -Value "./secrets/postgres_user.txt"
 
-Function Invoke-DockerComposeForDevelopment { 
+Function Invoke-DockerComposeForDevelopment {
     <#
         .SYNOPSIS
         Shortcut to run docker compose commands with the files required for development
@@ -25,7 +25,7 @@ Function Invoke-DockerComposeForDevelopment {
         .EXAMPLE
         PS> dcdev ps
     #>
-    docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml $args 
+    docker-compose -f docker-compose.yaml -f docker-compose.dev.yaml $args
 }
 Set-Alias -Name dcdev -Value Invoke-DockerComposeForDevelopment
 
@@ -74,7 +74,7 @@ Function Invoke-Poetry {
         .EXAMPLE
         PS> poetry install --dev
     #>
-    docker exec $APP_CONTAINER poetry $args 
+    docker exec $APP_CONTAINER poetry $args
 }
 Set-Alias -Name poetry -Value Invoke-Poetry
 
@@ -90,7 +90,7 @@ Function Start-AppContainerShell {
 }
 Set-Alias -Name appshell -Value Start-AppContainerShell
 
-Function Start-DbContainerShell { 
+Function Start-DbContainerShell {
     <#
         .SYNOPSIS
         Start a shell inside the db service container
@@ -98,22 +98,22 @@ Function Start-DbContainerShell {
         .NOTES
         - The db service container has to be running
     #>
-    docker exec -it $DB_CONTAINER bash 
+    docker exec -it $DB_CONTAINER bash
 }
 Set-Alias -Name dbshell -Value Start-DbContainerShell
 
-Function Invoke-Tests { 
+Function Invoke-Tests {
     <#
         .SYNOPSIS
         Invoke the unit tests inside the app service container
 
         .EXAMPLE
         PS> test
-        
+
         .EXAMPLE
         PS> test tests.app.main
     #>
-    docker exec $APP_CONTAINER coverage run -m unittest $args 
+    docker exec $APP_CONTAINER coverage run -m unittest $args
 }
 Set-Alias -Name test -Value Invoke-Tests
 
@@ -168,36 +168,34 @@ Function Publish-RequiredFiles {
 Function New-SslCertificate {
     try {
         mkcert -install
-        Start-Process -FilePath mkcert -ArgumentList "localhost", "0.0.0.0", "127.0.0.1" -WorkingDirectory ${SSL_CERTIFICATE_DIRECTORY}        
+        Start-Process -FilePath mkcert -ArgumentList "localhost", "0.0.0.0", "127.0.0.1" -WorkingDirectory ${SSL_CERTIFICATE_DIRECTORY}
     }
     catch {
-        Write-Output "mkcert not found. See https://github.com/FiloSottile/mkcert for installation instructions." 
+        Write-Output "mkcert not found. See https://github.com/FiloSottile/mkcert for installation instructions."
     }
 }
 
-Function New-RandomPassword { 
+Function New-RandomPassword {
     <#
         .Synopsis
         This will generate a new password in Powershell using Special, Uppercase, Lowercase and Numbers.  The max number of characters are currently set to 79.
         For updated help and examples refer to -Online version.
-     
-     
-        .NOTES   
+
+
+        .NOTES
         Name: New-RandomPassword
         Author: theSysadminChannel
         Version: 1.0
         DateCreated: 2019-Feb-23
-     
-     
-        .LINK 
+
+
+        .LINK
         https://thesysadminchannel.com/generate-strong-random-passwords-using-powershell/ -
-     
-     
+
         .EXAMPLE
         For updated help and examples refer to -Online version.
-     
     #>
-     
+
     [CmdletBinding()]
     param(
         [Parameter(
@@ -206,16 +204,14 @@ Function New-RandomPassword {
         )]
         [ValidateRange(5, 79)]
         [int]    $Length = 16,
-     
+
         [switch] $ExcludeSpecialCharacters
-     
     )
-     
-     
+
     BEGIN {
         $SpecialCharacters = @((33, 35) + (36..38) + (42..44) + (60..64) + (91..94))
     }
-     
+
     PROCESS {
         try {
             if (-not $ExcludeSpecialCharacters) {
@@ -229,7 +225,7 @@ Function New-RandomPassword {
             Write-Error $_.Exception.Message
         }
     }
-     
+
     END {
         Write-Output $Password
     }
