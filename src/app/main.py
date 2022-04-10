@@ -1,12 +1,8 @@
-import logging
-
 import tornado.web
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
 
 from app.utils import getenv_bool
-
-logger = logging.getLogger(__name__)
 
 
 class MainHandler(tornado.web.RequestHandler):
