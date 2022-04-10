@@ -3,6 +3,7 @@ version: "3.8"
 services:
   app:
     image: docker-all-the-way/app-run-local:latest
+    container_name: docker-all-the-way-app
     environment:
       DEBUG: 0
     secrets:
@@ -12,6 +13,7 @@ services:
       - db
   nginx:
     image: nginx:1.21-alpine
+    container_name: docker-all-the-way-nginx
     ports:
       - "8080:80"
       - "4433:443"
@@ -27,6 +29,7 @@ services:
       - app
   db:
     image: postgres:14.2
+    container_name: docker-all-the-way-db
     environment:
       - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
       - POSTGRES_USER_FILE=/run/secrets/postgres_user
