@@ -8,6 +8,11 @@ This README contains doesn't contain very much information, which is by design.
 (README files aren't maintained very well since they don't break when something changes).
 Instead, `activate.ps1` should give a decent understanding of how to get the app up and running.
 
+## Dependencies
+
+The project uses [Poetry](https://python-poetry.org/) for dependency management.
+The number of dependencies are kept to a minimum, and the dependencies that are used are chosen for their size to keep the Docker build as fast as possible.
+
 ## Prerequisites
 
 1. [mkcert](https://github.com/FiloSottile/mkcert) must be installed
