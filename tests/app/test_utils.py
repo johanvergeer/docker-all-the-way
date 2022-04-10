@@ -7,11 +7,11 @@ from app.utils import getenv_bool, read_secret
 
 
 class TestGetEnvBool(TestCase):
-    def test_environment_variable_not_set(self):
+    def test_environment_variable_not_set(self) -> None:
         self.assertEqual(getenv_bool("FOO", default=True), True)
         self.assertEqual(getenv_bool("FOO", default=False), False)
 
-    def test_environment_variable_set(self):
+    def test_environment_variable_set(self) -> None:
         value_and_expected = {
             "1": True,
             "True": True,

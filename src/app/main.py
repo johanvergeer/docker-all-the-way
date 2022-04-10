@@ -1,17 +1,17 @@
-import tornado.web
 from tornado.httpserver import HTTPServer
 from tornado.ioloop import IOLoop
+from tornado.web import Application, RequestHandler
 
 from app.utils import getenv_bool
 
 
-class MainHandler(tornado.web.RequestHandler):
-    def get(self):
+class MainHandler(RequestHandler):
+    def get(self) -> None:
         self.write("Hello, World")
 
 
-def make_app():
-    return tornado.web.Application(
+def make_app() -> Application:
+    return Application(
         [
             (r"/", MainHandler),
         ],
@@ -19,7 +19,7 @@ def make_app():
     )
 
 
-def main():
+def main() -> None:
     app = make_app()
 
     server = HTTPServer(app)

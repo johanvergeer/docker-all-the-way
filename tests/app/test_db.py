@@ -6,7 +6,7 @@ from app.utils import read_secret
 
 
 class TestDatabaseConnection(TestCase):
-    def test_database_connection(self):
+    def test_database_connection(self) -> None:
         psycopg2.connect(
             user=read_secret("postgres_user"),
             password=read_secret("postgres_password"),

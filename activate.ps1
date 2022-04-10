@@ -78,6 +78,19 @@ Function Invoke-Poetry {
 }
 Set-Alias -Name poetry -Value Invoke-Poetry
 
+Function Invoke-Mypy {
+    <#
+        .SYNOPSIS
+        Invokes mypy commands inside the app service container
+
+        .EXAMPLE
+        PS> mypy
+    #>
+
+    docker exec $APP_CONTAINER mypy $args
+}
+Set-Alias -Name mypy -Value Invoke-Mypy
+
 Function Start-AppContainerShell {
     <#
         .SYNOPSIS

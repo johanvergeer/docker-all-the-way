@@ -2,7 +2,7 @@ from os import getenv
 from pathlib import Path
 
 
-def getenv_bool(variable_name: str, default: bool = False):
+def getenv_bool(variable_name: str, default: bool = False) -> bool:
     return getenv(variable_name, default=str(default)).lower() in {"true", "1", "t"}
 
 
