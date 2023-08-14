@@ -10,7 +10,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.10"
-tornado = "6.1"
+tornado = "6.3.3"
 psycopg2-binary = "2.9.3"
 
 [tool.poetry.dev-dependencies]
